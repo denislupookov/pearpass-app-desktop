@@ -23,31 +23,31 @@ const importOptions = [
     title: '1Password',
     type: '1password',
     accepts: ['.csv'],
-    imgSrc: '/assets/images/1password.png'
+    imgSrc: 'assets/images/1password.png'
   },
   {
     title: 'Bitwarden',
     type: 'bitwarden',
     accepts: ['.json', '.csv'],
-    imgSrc: '/assets/images/BitWarden.png'
+    imgSrc: 'assets/images/BitWarden.png'
   },
   {
     title: 'LastPass',
     type: 'lastpass',
     accepts: ['.csv'],
-    imgSrc: '/assets/images/LastPass.png'
+    imgSrc: 'assets/images/LastPass.png'
   },
   {
     title: 'NordPass',
     type: 'nordpass',
     accepts: ['.csv'],
-    imgSrc: '/assets/images/NordPass.png'
+    imgSrc: 'assets/images/NordPass.png'
   },
   {
     title: 'Proton Pass',
     type: 'protonpass',
     accepts: ['.csv', '.json'],
-    imgSrc: '/assets/images/ProtonPass.png'
+    imgSrc: 'assets/images/ProtonPass.png'
   },
   // Not supported yet
   // {
@@ -60,7 +60,7 @@ const importOptions = [
     title: 'Unencrypted file',
     type: 'unencrypted',
     accepts: ['.json', '.csv'],
-    imgSrc: '/assets/images/pearpass_logo.png'
+    imgSrc: 'assets/images/pearpass_logo.png'
   }
 ]
 

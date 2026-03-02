@@ -32,6 +32,7 @@
         "src/types/**/*",
         "src/**/*",
         "app.tsx",
+        "app.electron.tsx",
         "styles.js"
     ],
     "exclude": [
