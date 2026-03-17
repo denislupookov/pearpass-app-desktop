@@ -11,7 +11,16 @@ const { app, BrowserWindow, ipcMain, nativeImage } = require('electron')
 const PearRuntime = require('pear-runtime')
 const getPearRuntimeLegacyStorage = require('pear-runtime-legacy-storage')
 const { isLinux, isWindows, isMac } = require('which-runtime')
-const debugMode = false
+let debugMode = false
+
+;(async () => {
+  try {
+    const { DEBUG_MODE } = await import('../src/constants/appConstants.js')
+    debugMode = DEBUG_MODE
+  } catch {
+    // fall back to default debugMode = false
+  }
+})()
 
 const pkg = require('../package.json')
 const runtimeConfig = require('./runtime-config.cjs')
@@ -50,7 +59,7 @@ let vaultClient = null
 function getExecPath() {
   if (!app.isPackaged) return null
   if (isLinux && process.env.APPIMAGE) return process.env.APPIMAGE
-  if (isWindows) return process.execPath
+  if (isWindows) return true
   return path.join(process.resourcesPath, '..', '..')
 }
 
@@ -338,8 +347,8 @@ function createWindow() {
       : path.join(__dirname, '..', 'assets', 'darwin', 'icon.png')
   } else if (process.platform === 'win32') {
     iconPath = app.isPackaged
-      ? path.join(process.resourcesPath, 'assets', 'win32', 'icon.png')
-      : path.join(__dirname, '..', 'assets', 'win32', 'icon.png')
+      ? path.join(process.resourcesPath, 'assets', 'win32', 'icon.ico')
+      : path.join(__dirname, '..', 'assets', 'win32', 'icon.ico')
   } else {
     iconPath = app.isPackaged
       ? path.join(process.resourcesPath, 'assets', 'linux', 'icon.png')
@@ -373,6 +382,7 @@ function createWindow() {
       : {}),
     backgroundColor: '#1F2430',
     icon: iconPath && iconImage && !iconImage.isEmpty() ? iconPath : undefined,
+    autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       nodeIntegration: true,
@@ -447,8 +457,12 @@ function registerIPC() {
 
   ipcMain.handle('runtime:restart', async () => {
     logger.info('[MAIN]', 'runtime:restart')
-    app.relaunch()
-    app.exit(0)
+    if (isMac || isLinux) {
+      app.relaunch()
+      app.exit(0)
+    } else {
+      app.exit(0)
+    }
   })
 
   ipcMain.handle(
