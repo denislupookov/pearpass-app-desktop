@@ -50,7 +50,7 @@ export const Footer = styled.div`
 
 export const ProgressSection = styled.div`
   display: flex;
-  width: min(100%, 438px);
+  width: min(100%, 500px);
   flex-direction: column;
   margin-top: 8px;
   gap: 0;
