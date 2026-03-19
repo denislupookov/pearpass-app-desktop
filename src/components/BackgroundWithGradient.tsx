@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ReactNode, CSSProperties } from 'react'
 import styled from 'styled-components'
-import { useTheme } from '@tetherto/pearpass-lib-ui-kit'
+// import { useTheme } from '@tetherto/pearpass-lib-ui-kit'
 
 interface ContainerProps {
   $backgroundColor: string
@@ -38,7 +38,8 @@ export const BackgroundWithGradient: React.FC<BackgroundWithGradientProps> = ({
   backgroundColor: customBg,
   gradientColors: customGradientColors
 }) => {
-  const { theme } = useTheme()
+  // const { theme } = useTheme()
+  const theme = { colors: { colorSurfacePrimary: '#000000' } }
   const backgroundColor = customBg || theme.colors.colorSurfacePrimary
   const gradientColors = customGradientColors || ['#2A3317', backgroundColor]
 

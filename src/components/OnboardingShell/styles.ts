@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { rawTokens } from '@tetherto/pearpass-lib-ui-kit'
+// import { rawTokens } from '@tetherto/pearpass-lib-ui-kit'
+const rawTokens = { spacing24: 24 }
 
 interface SolidBackgroundProps {
   $backgroundColor: string

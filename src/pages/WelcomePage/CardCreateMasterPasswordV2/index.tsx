@@ -1,61 +1,66 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { useForm } from '@tetherto/pear-apps-lib-ui-react-hooks'
-import { Validator } from '@tetherto/pear-apps-utils-validator'
+// import { useForm } from '@tetherto/pear-apps-lib-ui-react-hooks'
+// import { Validator } from '@tetherto/pear-apps-utils-validator'
 // @ts-ignore - JS module re-export
-import { TERMS_OF_USE } from '@tetherto/pearpass-lib-constants'
-import { useUserData } from '@tetherto/pearpass-lib-vault'
+// import { TERMS_OF_USE } from '@tetherto/pearpass-lib-constants'
+// import { useUserData } from '@tetherto/pearpass-lib-vault'
+/*
 import {
   stringToBuffer,
   clearBuffer
 } from '@tetherto/pearpass-lib-vault/src/utils/buffer'
+*/
 // @ts-ignore - JS module without type declarations
-import { checkPasswordStrength } from '@tetherto/pearpass-utils-password-check'
-import { AlertMessage, Button, Form, Link, PasswordField, Text, Title } from '@tetherto/pearpass-lib-ui-kit'
-import type { PasswordIndicatorVariant } from '@tetherto/pearpass-lib-ui-kit'
-import {
-  KeyboardArrowRightFilled,
-  InfoOutlined,
-  ReportProblemRound
-} from '@tetherto/pearpass-lib-ui-kit/icons'
-import { useTheme } from '@tetherto/pearpass-lib-ui-kit'
+// import { checkPasswordStrength } from '@tetherto/pearpass-utils-password-check'
+// import { AlertMessage, Button, Form, Link, PasswordField, Text, Title } from '@tetherto/pearpass-lib-ui-kit'
+// import type { PasswordIndicatorVariant } from '@tetherto/pearpass-lib-ui-kit'
+// import {
+//   KeyboardArrowRightFilled,
+//   InfoOutlined,
+//   ReportProblemRound
+// } from '@tetherto/pearpass-lib-ui-kit/icons'
+// import { useTheme } from '@tetherto/pearpass-lib-ui-kit'
 
-import { createStyles } from './styles'
-import { LOCAL_STORAGE_KEYS } from '../../../constants/localStorage'
-import { useGlobalLoading } from '../../../context/LoadingContext'
-import { useRouter } from '../../../context/RouterContext'
-import { useTranslation } from '../../../hooks/useTranslation'
-import { logger } from '../../../utils/logger'
+// import { createStyles } from './styles'
+// import { LOCAL_STORAGE_KEYS } from '../../../constants/localStorage'
+// import { useGlobalLoading } from '../../../context/LoadingContext'
+// import { useRouter } from '../../../context/RouterContext'
+// import { useTranslation } from '../../../hooks/useTranslation'
+// import { logger } from '../../../utils/logger'
 
+/*
 const STRENGTH_MAP: Record<string, PasswordIndicatorVariant> = {
   error: 'vulnerable',
   warning: 'decent',
   success: 'strong'
 }
+*/
 
 export const CardCreateMasterPasswordV2 = () => {
+  /*
   const { t } = useTranslation()
-  const { currentPage, navigate } = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const { theme } = useTheme()
-  const styles = createStyles(theme.colors)
+  const { } = useRouter()
+  const [isLoading] = useState(false)
+  // const { theme } = useTheme()
+  const styles = createStyles({}) // theme.colors
 
   useGlobalLoading({ isLoading })
 
-  const { createMasterPassword } = useUserData()
+  // const { createMasterPassword } = useUserData()
 
-  const schema = Validator.object({
+  const _schema = Validator.object({
     password: Validator.string().required(t('Password is required')),
     passwordConfirm: Validator.string().required(t('Password is required'))
   })
 
-  const { register, handleSubmit, setErrors, setValue, values } = useForm({
+  const { values } = useForm({
     initialValues: {
       password: '',
       passwordConfirm: ''
     },
     validate: (formValues: { password: string; passwordConfirm: string }) =>
-      schema.validate(formValues)
+      _schema.validate(formValues)
   })
 
   const passwordStrength = values.password
@@ -67,12 +72,15 @@ export const CardCreateMasterPasswordV2 = () => {
     isPasswordStrong &&
     values.password.length > 0 &&
     values.password === values.passwordConfirm
-  const isFormValid = isPasswordStrong && passwordsMatch
+  */
 
+  /*
   const passwordIndicator: PasswordIndicatorVariant | undefined = passwordStrength
     ? STRENGTH_MAP[passwordStrength.strengthType]
     : undefined
+  */
 
+  /*
   const handlePasswordChange = (val: string) => {
     register('password').onChange(val)
     if (!val) {
@@ -128,11 +136,12 @@ export const CardCreateMasterPasswordV2 = () => {
     navigate(currentPage, { state: 'loadVault' })
   }
 
-  const showInfoToast = values.password && !isPasswordStrong
+  // const showInfoToast = values.password && !isPasswordStrong
+  */
 
   return (
-    <div style={styles.card}>
-      {/* @ts-ignore - plain CSS objects passed to react-strict-dom components */}
+    <div style={{}}>
+      {/* 
       <Form onSubmit={handleSubmit(onSubmit)} style={styles.container}>
         <div style={styles.header}>
           <Title as="h2">{t('Create Master Password')}</Title>
@@ -192,10 +201,8 @@ export const CardCreateMasterPasswordV2 = () => {
 
         <div style={styles.footerRow}>
           <div style={styles.touContainer}>
-            {/* @ts-ignore */}
             <Text as="span" variant="caption" style={styles.touText}>{t('By clicking Continue, you confirm that you have read and agree to the ')}</Text>{' '}
             <Link
-              // @ts-ignore - plain CSS object
               style={styles.touLink}
               href={TERMS_OF_USE}
               isExternal
@@ -216,6 +223,7 @@ export const CardCreateMasterPasswordV2 = () => {
           </Button>
         </div>
       </Form>
+      */}
     </div>
   )
 }

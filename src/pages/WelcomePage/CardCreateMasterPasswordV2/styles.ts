@@ -1,7 +1,8 @@
-import type { ThemeColors } from '@tetherto/pearpass-lib-ui-kit'
-import { rawTokens } from '@tetherto/pearpass-lib-ui-kit'
+// import type { ThemeColors } from '@tetherto/pearpass-lib-ui-kit'
+// import { rawTokens } from '@tetherto/pearpass-lib-ui-kit'
 
-export const createStyles = (colors: ThemeColors) => ({
+export const createStyles = (_colors: Record<string, unknown>) => ({
+/*
   card: {
     background: colors.colorSurfacePrimary,
     border: `1px solid ${colors.colorBorderPrimary}`,
@@ -91,4 +92,5 @@ export const createStyles = (colors: ThemeColors) => ({
     textDecoration: 'underline',
     textDecorationStyle: 'solid' as const
   }
+*/
 })

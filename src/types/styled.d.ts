@@ -40,7 +40,7 @@ declare module 'styled-components' {
       secondary400: {
         mode1: string
       }
-      [key: string]: any
+      [key: string]: any // eslint-disable-line @typescript-eslint/no-explicit-any
     }
   }
 }

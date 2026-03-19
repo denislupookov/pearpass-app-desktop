@@ -1,4 +1,5 @@
-import { rawTokens } from '@tetherto/pearpass-lib-ui-kit'
+// import { rawTokens } from '@tetherto/pearpass-lib-ui-kit'
+const rawTokens = { spacing8: 8, radius8: 8, radius20: 20 }
 import styled from 'styled-components'
 
 import { isV2 } from '../../utils/designVersion'

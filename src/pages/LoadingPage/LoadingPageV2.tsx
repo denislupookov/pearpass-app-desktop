@@ -1,5 +1,14 @@
 import React from 'react'
-import { Text, Title, useTheme } from '@tetherto/pearpass-lib-ui-kit'
+// import { Text, Title, useTheme } from '@tetherto/pearpass-lib-ui-kit'
+const Text = (props: React.HTMLAttributes<HTMLSpanElement> & { as?: string; variant?: string }) => (
+  <span {...props}>{props.children}</span>
+)
+const Title = (props: React.HTMLAttributes<HTMLHeadingElement>) => <h1 {...props}>{props.children}</h1>
+const useTheme = () => ({
+  theme: {
+    colors: { colorSurfaceHover: '#333333', colorPrimary: '#0070f3' }
+  }
+})
 import { OnboardingShell } from '../../components/OnboardingShell'
 import {
   ArtFrame,

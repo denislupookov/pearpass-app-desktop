@@ -21,11 +21,11 @@ const strictDomBabelConfig = require(path.join(root, 'babel.strict-dom.cjs'))
 const strictDomCssInclude = [
   'app.electron.tsx',
   'src/**/*.{js,jsx,mjs,ts,tsx}',
-  'node_modules/@tetherto/pearpass-lib-ui-kit/dist/**/*.js'
+  // 'node_modules/@tetherto/pearpass-lib-ui-kit/dist/**/*.js'
 ]
 const strictDomRuntimePaths = [
   `${path.sep}node_modules${path.sep}react-strict-dom${path.sep}dist${path.sep}`,
-  `${path.sep}node_modules${path.sep}@tetherto${path.sep}pearpass-lib-ui-kit${path.sep}dist${path.sep}`
+  // `${path.sep}node_modules${path.sep}@tetherto${path.sep}pearpass-lib-ui-kit${path.sep}dist${path.sep}`
 ]
 
 function shouldTransformStrictDomRuntime(filePath) {

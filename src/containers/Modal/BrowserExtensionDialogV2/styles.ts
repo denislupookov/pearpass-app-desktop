@@ -1,7 +1,8 @@
-import type { ThemeColors } from '@tetherto/pearpass-lib-ui-kit'
-import { rawTokens } from '@tetherto/pearpass-lib-ui-kit'
+// import type { ThemeColors } from '@tetherto/pearpass-lib-ui-kit'
+// import { rawTokens } from '@tetherto/pearpass-lib-ui-kit'
 
-export const createStyles = (colors: ThemeColors) => ({
+export const createStyles = (_colors: Record<string, unknown>) => ({
+/*
   body: {
     display: 'flex' as const,
     flexDirection: 'column' as const,
@@ -33,4 +34,5 @@ export const createStyles = (colors: ThemeColors) => ({
     color: colors.colorTextSecondary,
     whiteSpace: 'pre-wrap' as const
   },
+*/
 })

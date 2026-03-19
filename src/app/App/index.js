@@ -1,6 +1,11 @@
 import { useState, useCallback } from 'react'
 
-import { useTheme } from '@tetherto/pearpass-lib-ui-kit'
+// import { useTheme } from '@tetherto/pearpass-lib-ui-kit'
+const useTheme = () => ({
+  theme: {
+    colors: { colorBackground: '#1F2430', colorBorderPrimary: '#333333' }
+  }
+})
 import { html } from 'htm/react'
 
 import { useInactivity } from './hooks/useInactivity'

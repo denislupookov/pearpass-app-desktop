@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTheme } from '@tetherto/pearpass-lib-ui-kit'
+// import { useTheme } from '@tetherto/pearpass-lib-ui-kit'
 import { BackgroundWithGradient } from '../BackgroundWithGradient'
 
 import {
@@ -19,7 +19,8 @@ export const OnboardingShell = ({
   background,
   children
 }: OnboardingShellProps): React.ReactElement => {
-  const { theme } = useTheme()
+  // const { theme } = useTheme()
+  const theme = { colors: { colorSurfacePrimary: '#000000' } }
 
   const content = (
     <Stage>

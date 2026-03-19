@@ -1,47 +1,52 @@
-import React, { FormEvent, useState } from 'react'
-import {
-  Button,
-  PasswordField,
-  Text,
-  Title,
-  useTheme
-} from '@tetherto/pearpass-lib-ui-kit'
-import {
-  KeyboardArrowRightRound
-} from '@tetherto/pearpass-lib-ui-kit/icons'
-import { useCreateVault, useUserData, useVault, useVaults } from '@tetherto/pearpass-lib-vault'
-import { clearBuffer, stringToBuffer } from '@tetherto/pearpass-lib-vault/src/utils/buffer'
+import React from 'react'
+// import {
+//   Button,
+//   PasswordField,
+//   Text,
+//   Title,
+//   useTheme
+// } from '@tetherto/pearpass-lib-ui-kit'
+// import {
+//   KeyboardArrowRightRound
+// } from '@tetherto/pearpass-lib-ui-kit/icons'
+// import { useCreateVault, useUserData, useVault, useVaults } from '@tetherto/pearpass-lib-vault'
+// import { clearBuffer, stringToBuffer } from '@tetherto/pearpass-lib-vault/src/utils/buffer'
 
 import { OnboardingShell } from '../../../components/OnboardingShell'
-import { NAVIGATION_ROUTES } from '../../../constants/navigation'
-import { useGlobalLoading } from '../../../context/LoadingContext'
-import { useRouter } from '../../../context/RouterContext'
-import { useTranslation } from '../../../hooks/useTranslation'
-import { getDeviceName } from '../../../utils/getDeviceName'
-import { logger } from '../../../utils/logger'
-import { sortByName } from '../../../utils/sortByName'
-import {
-  ButtonIconWrapper,
-  Footer,
-  Header,
-  Shell
-} from './styles'
+// import { NAVIGATION_ROUTES } from '../../../constants/navigation'
+// import { useGlobalLoading } from '../../../context/LoadingContext'
+// import { useRouter } from '../../../context/RouterContext'
+// import { useTranslation } from '../../../hooks/useTranslation'
+// import { getDeviceName } from '../../../utils/getDeviceName'
+// import { logger } from '../../../utils/logger'
+// import { sortByName } from '../../../utils/sortByName'
+// import {
+//   ButtonIconWrapper,
+//   Footer,
+//   Header,
+//   Shell
+// } from './styles'
 
 export const CardUnlockPearPassV2 = (): React.ReactElement => {
-  const { t } = useTranslation()
-  const { theme } = useTheme()
-  const { currentPage, navigate } = useRouter()
-  const { initVaults, refetch: refetchVaults } = useVaults()
-  const { isVaultProtected, addDevice, refetch: refetchVault } = useVault()
+  /*
+  // const t = (s: string) => s
+  // const _theme = { colors: {} } // useTheme()
+  // const { theme } = useTheme()
+  const { } = useRouter()
+  const { } = useVaults()
+  const { } = useVault()
+  // const { createVault } = useCreateVault()
+  */
+  /*
   const { createVault } = useCreateVault()
   const { logIn, refreshMasterPasswordStatus } = useUserData()
 
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  // useGlobalLoading({ isLoading })
+  */
 
-  useGlobalLoading({ isLoading })
-
+  /*
   const handlePasswordChange = (value: string) => {
     setPassword(value)
 
@@ -121,9 +126,12 @@ export const CardUnlockPearPassV2 = (): React.ReactElement => {
       setIsLoading(false)
     }
   }
+  */
 
   return (
     <OnboardingShell background="solid">
+      <div />
+      {/* 
       <Shell onSubmit={handleSubmit}>
         <Header>
           <Title>Enter Your Master Password</Title>
@@ -163,6 +171,7 @@ export const CardUnlockPearPassV2 = (): React.ReactElement => {
           </Button>
         </Footer>
       </Shell>
+      */}
     </OnboardingShell>
   )
 }

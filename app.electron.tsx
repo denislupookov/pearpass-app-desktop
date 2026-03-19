@@ -9,7 +9,7 @@ import {
   VaultProvider
 } from '@tetherto/pearpass-lib-vault'
 import { createRoot } from 'react-dom/client'
-import { ThemeProvider as UIKitProvider } from '@tetherto/pearpass-lib-ui-kit'
+// import { ThemeProvider as UIKitProvider } from '@tetherto/pearpass-lib-ui-kit'
 
 import './src/strict.css'
 import { App } from './src/app/App'
@@ -36,25 +36,23 @@ function renderApp() {
   if (!container) throw new Error('Failed to find the root element')
   const root = createRoot(container)
   root.render(
-    <UIKitProvider>
-      <LoadingProvider>
-        <ThemeProvider>
-          <VaultProvider>
-            <I18nProvider i18n={i18n}>
-              <ToastProvider>
-                <RouterProvider>
-                  <AutoLockProvider>
-                    <ModalProvider>
-                      <App />
-                    </ModalProvider>
-                  </AutoLockProvider>
-                </RouterProvider>
-              </ToastProvider>
-            </I18nProvider>
-          </VaultProvider>
-        </ThemeProvider>
-      </LoadingProvider>
-    </UIKitProvider>
+    <LoadingProvider>
+      <ThemeProvider>
+        <VaultProvider>
+          <I18nProvider i18n={i18n}>
+            <ToastProvider>
+              <RouterProvider>
+                <AutoLockProvider>
+                  <ModalProvider>
+                    <App />
+                  </ModalProvider>
+                </AutoLockProvider>
+              </RouterProvider>
+            </ToastProvider>
+          </I18nProvider>
+        </VaultProvider>
+      </ThemeProvider>
+    </LoadingProvider>
   )
 }
 
@@ -65,25 +63,25 @@ async function init() {
     throw new Error('Electron config or vault client missing')
 
   const api = window.electronAPI!
-  ;(window as unknown as { Pear: object }).Pear = {
-    config: {
-      storage: config.storage,
-      key: config.key,
-      applink: config.applink || ''
-    },
-    updated: () => api.checkUpdated(),
-    updates: (cb: (update?: unknown) => void) => {
-      const unsub1 = api.onRuntimeUpdating(() => cb({}))
-      const unsub2 = api.onRuntimeUpdated(() => cb({}))
-      return () => {
-        unsub1()
-        unsub2()
-      }
-    },
-    reload: () => window.location.reload(),
-    restart: () => api.restart(),
-    teardown: () => {}
-  }
+    ; (window as unknown as { Pear: object }).Pear = {
+      config: {
+        storage: config.storage,
+        key: config.key,
+        applink: config.applink || ''
+      },
+      updated: () => api.checkUpdated(),
+      updates: (cb: (update?: unknown) => void) => {
+        const unsub1 = api.onRuntimeUpdating(() => cb({}))
+        const unsub2 = api.onRuntimeUpdated(() => cb({}))
+        return () => {
+          unsub1()
+          unsub2()
+        }
+      },
+      reload: () => window.location.reload(),
+      restart: () => api.restart(),
+      teardown: () => { }
+    }
 
   // Seed shared PearPass client singleton so code that calls
   // createOrGetPearpassClient() without arguments (e.g. extension pairing)

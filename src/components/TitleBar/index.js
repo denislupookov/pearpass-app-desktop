@@ -1,4 +1,4 @@
-import { useTheme } from '@tetherto/pearpass-lib-ui-kit'
+// import { useTheme } from '@tetherto/pearpass-lib-ui-kit'
 import { html } from 'htm/react'
 import styled from 'styled-components'
 
@@ -28,7 +28,8 @@ export const TitleBar = () => {
   if (!isV2()) return null
   if (process.platform !== 'darwin') return null
 
-  const { theme } = useTheme()
+  // const { theme } = useTheme()
+  const theme = { colors: { colorBackground: '#000000' } }
   const backgroundColor = theme.colors.colorBackground
 
   return html`

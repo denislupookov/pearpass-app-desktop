@@ -1,6 +1,15 @@
 import React, { useState } from 'react'
-import { Button, Text, Title } from '@tetherto/pearpass-lib-ui-kit'
-import { KeyboardArrowRightRound } from '@tetherto/pearpass-lib-ui-kit/icons'
+// import { Button, Text, Title } from '@tetherto/pearpass-lib-ui-kit'
+// import { KeyboardArrowRightRound } from '@tetherto/pearpass-lib-ui-kit/icons'
+
+const Button = (props: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: string; size?: string; iconAfter?: React.ReactNode }) => (
+  <button {...props}>{props.children}</button>
+)
+const Text = (props: React.HTMLAttributes<HTMLSpanElement> & { as?: string; variant?: string }) => (
+  <span {...props}>{props.children}</span>
+)
+const Title = (props: React.HTMLAttributes<HTMLHeadingElement>) => <h1 {...props}>{props.children}</h1>
+const KeyboardArrowRightRound = () => <span>{'>'}</span>
 import { OnboardingShell } from '../../components/OnboardingShell'
 import { NAVIGATION_ROUTES } from '../../constants/navigation'
 import { useRouter } from '../../context/RouterContext'
