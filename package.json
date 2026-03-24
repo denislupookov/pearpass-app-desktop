@@ -46,6 +46,30 @@
       ],
       "artifactName": "${productName}.${ext}"
     },
+    "snap": {
+      "base": "core22",
+      "confinement": "classic",
+      "grade": "stable",
+      "summary": "A fully local, open-source password manager for privacy and control",
+      "artifactName": "${productName}_${version}_${arch}.${ext}",
+      "plugs": [
+        "default",
+        {
+          "dot-config-pear": {
+            "interface": "personal-files",
+            "write": [
+              "$HOME/.config/pear"
+            ]
+          }
+        },
+        {
+          "shmem": {
+            "interface": "shared-memory",
+            "private": true
+          }
+        }
+      ]
+    },
     "toolsets": {
       "appimage": "1.0.2"
     },
@@ -90,8 +114,7 @@
         "tsconfig.json",
         "eslint.config.js",
         "jest.config.js",
-        "flatpak",
-        "snapcraft"
+        "flatpak"
       ]
     }
   },
@@ -115,21 +138,25 @@
     "electron": "electron .",
     "dev": "concurrently -n \"TypeScript,Bundle,Electron\" -c \"blue,cyan,green\" \"node node_modules/typescript/bin/tsc --watch\" \"node scripts/bundle-renderer.mjs --watch\" \"wait-on dist/renderer.bundle.js && electron .\"",
     "dev:reset": "PEARPASS_DEV_RESET=1 npm run dev",
-    "pack": "npm install && npm run build:prod && npm prune --omit=dev && npm install electron --no-save && npx electron-builder --dir && npm install",
-    "dist": "npm install && npm run build:prod && npm prune --omit=dev && npm install electron --no-save && npx electron-builder && npm install",
+    "dist:prepare:dev": "npm install && npm run build && npm prune --omit=dev && npm install electron --no-save",
     "dist:mac:arm64": "npx electron-builder --mac --arm64 -c electron-builder.mac.json --publish never && npm run pear:build:darwin:arm64",
     "dist:mac:x64": "npx electron-builder --mac --x64 -c electron-builder.mac.json --publish never && npm run pear:build:darwin:x64",
     "dist:mac:arm64:dev": "SKIP_NOTARIZE=true CSC_IDENTITY_AUTO_DISCOVERY=false npm run dist:mac:arm64",
     "dist:mac:x64:dev": "SKIP_NOTARIZE=true CSC_IDENTITY_AUTO_DISCOVERY=false npm run dist:mac:x64",
-    "dist:win": "npm run build:prod && electron-forge make --platform=win32 --arch=x64 && npm run pear:build:win",
+    "dist:win:x64": "electron-forge make --platform=win32 --arch=x64 && npm run pear:build:win:x64",
+    "dist:win:arm64": "electron-forge make --platform=win32 --arch=arm64 && npm run pear:build:win:arm64",
     "dist:linux:x64": "npx electron-builder --linux --x64 -c electron-builder.linux.json --publish never && npm run pear:build:linux:x64",
     "dist:linux:arm64": "npx electron-builder --linux --arm64 -c electron-builder.linux.json --publish never && npm run pear:build:linux:arm64",
-    "dist:snap": "npm install && npm run build:prod && npm prune --omit=dev && npm install electron --no-save && npm exec --yes --package electron-builder -- electron-builder --linux snap && npm install",
+    "dist:snap:x64": "npm exec --yes --package electron-builder -- electron-builder --linux snap --x64",
+    "dist:snap:arm64": "npm exec --yes --package electron-builder -- electron-builder --linux snap --arm64",
+    "dist:snap:x64:dev": "npm run dist:prepare:dev && dist:snap:x64 && npm install",
+    "dist:snap:arm64:dev": "npm run dist:prepare:dev && dist:snap:arm64 && npm install",
     "pear:build:darwin:arm64": "npx pear-build --package=./package.json --darwin-arm64-app ./out/mac-arm64/PearPass.app --target ../pearpass-app-desktop-$npm_package_version",
     "pear:build:darwin:x64": "npx pear-build --package=./package.json --darwin-x64-app ./out/mac/PearPass.app --target ../pearpass-app-desktop-$npm_package_version",
-    "pear:build:win": "npx pear-build --package=./package.json --win32-x64-app ./out/PearPass/PearPass.msix --target ../pearpass-app-desktop-%npm_package_version%",
     "pear:build:linux:x64": "npx pear-build --package=./package.json --linux-x64-app ./out/PearPass.AppImage --target ../pearpass-app-desktop-$npm_package_version",
-    "pear:build:linux:arm64": "npx pear-build --package=./package.json --linux-arm64-app ./out/PearPass.AppImage --target ../pearpass-app-desktop-$npm_package_version"
+    "pear:build:linux:arm64": "npx pear-build --package=./package.json --linux-arm64-app ./out/PearPass.AppImage --target ../pearpass-app-desktop-$npm_package_version",
+    "pear:build:win:x64": "npx pear-build --package=./package.json --win32-x64-app ./out/PearPass/PearPass.msix --target ../pearpass-app-desktop-%npm_package_version%",
+    "pear:build:win:arm64": "npx pear-build --package=./package.json --win32-arm64-app ./out/PearPass/PearPass.msix --target ../pearpass-app-desktop-%npm_package_version%"
   },
   "devDependencies": {
     "@babel/core": "7.26.10",
@@ -174,7 +201,7 @@
     "jest-environment-jsdom": "29.7.0",
     "nodemon": "^3.0.0",
     "patch-package": "^8.0.1",
-    "pear-build": "^0.2.0",
+    "pear-build": "^1.1.0",
     "pear-interface": "1.0.0",
     "pear-runtime-updater": "^2.0.2",
     "prettier": "3.4.2",
