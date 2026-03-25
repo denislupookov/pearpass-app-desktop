@@ -58,6 +58,7 @@ jobs:
         working-directory: ./appling
     env:
       APP_FILE: ${{ github.ref == 'refs/heads/main' && 'app' || github.ref == 'refs/heads/staging' && 'app.staging' || 'app.dev' }}.cjs
+      PEARPASS_UPGRADE_LINK: ${{ vars.PEARPASS_UPGRADE_LINK }}
     steps:
       - uses: actions/checkout@v4
 
@@ -121,6 +122,7 @@ jobs:
       # Apple code signing identity - used for app, installer, and DMG signing
       APPLE_SIGNING_IDENTITY: "959D2C8BB8323AEF9C2367ACA2F854AE4D7DE458"
       APP_FILE: ${{ github.ref == 'refs/heads/main' && 'app' || github.ref == 'refs/heads/staging' && 'app.staging' || 'app.dev' }}.cjs
+      PEARPASS_UPGRADE_LINK: ${{ vars.PEARPASS_UPGRADE_LINK }}
     steps:
       - uses: actions/checkout@v4
 
@@ -249,22 +251,22 @@ jobs:
           security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
           rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.provisionprofile
 
-  # release:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: write
-  #   needs: [version, linux, macos]
-  #   if: github.ref == 'refs/heads/main'
-  #   steps:
-  #     - name: Download artifacts
-  #       uses: actions/download-artifact@v5
-  #       with:
-  #         path: artifacts/
-  #         merge-multiple: true
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs: [version, linux, macos]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v5
+        with:
+          path: artifacts/
+          merge-multiple: true
 
-  #     - name: Create Release
-  #       uses: softprops/action-gh-release@v2
-  #       with:
-  #         tag_name: v${{ needs.version.outputs.version }}
-  #         name: PearPass-Desktop-v${{ needs.version.outputs.version }}
-  #         files: artifacts/**
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.version.outputs.version }}
+          name: PearPass-Desktop-v${{ needs.version.outputs.version }}
+          files: artifacts/**

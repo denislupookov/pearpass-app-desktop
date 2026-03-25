@@ -9,6 +9,8 @@ import {
   isWindows as IS_WINDOWS
 } from 'which-runtime'
 
+import { DEBUG_MODE } from './constants/appConstants'
+
 export const PEAR_RUNTIME_UPDATED_MESSAGE = { type: 'pear-runtime/updated' }
 export const PEAR_RUNTIME_UPDATING_MESSAGE = { type: 'pear-runtime/updating' }
 
@@ -18,7 +20,6 @@ function getApp() {
 
     const arg = process.argv[index]
     const { appling } = JSON.parse(arg).flags || {}
-    console.log(appling, 'appling getApp', process, 'process')
     if (!appling) return
     if (IS_MAC) {
       return path.join(appling, '..', '..', '..') // appling path points to the bin
@@ -30,9 +31,18 @@ function getApp() {
 }
 
 async function startUpdater() {
-  const response = await fetch('package.json')
-  const pkg = await response.json()
-  const { upgrade, version, productName } = pkg
+  const pkg = (() => {
+    try {
+      if (typeof Pear?.get === 'function') {
+        return Pear.get('package.json').then((txt) => JSON.parse(txt))
+      }
+    } catch {}
+    // Fallback for dev environments.
+    return fetch('package.json').then((res) => res.json())
+  })()
+
+  const { upgrade: upgradeFromPkg, version, productName } = await pkg
+  const upgrade = process?.env?.PEARPASS_UPGRADE_LINK || upgradeFromPkg
   const app = getApp()
 
   const dir =
@@ -59,11 +69,40 @@ async function startUpdater() {
   }
 
   pipe.on('data', (data) => {
-    const event = Buffer.from(data).toString()
-    console.log(event, 'event')
-    if (event === events.UPDATING) Pear.message(PEAR_RUNTIME_UPDATING_MESSAGE)
-    if (event === events.UPDATED) Pear.message(PEAR_RUNTIME_UPDATED_MESSAGE)
+    const text = Buffer.from(data).toString('utf8')
+    const normalizedText = text.trim()
+    // Worker logs are sent as JSON frames through the same pipe.
+    if (DEBUG_MODE && normalizedText.startsWith('{')) {
+      try {
+        const msg = JSON.parse(normalizedText)
+        if (msg?.type === 'OTA_LOG') {
+          // eslint-disable-next-line no-console
+          console.log('OTA_LOG', msg.label, msg.payload)
+          return
+        }
+      } catch {}
+    }
+
+    const event = normalizedText
+
+    if (event === events.UPDATING)
+      void safePearMessage(PEAR_RUNTIME_UPDATING_MESSAGE)
+    if (event === events.UPDATED)
+      void safePearMessage(PEAR_RUNTIME_UPDATED_MESSAGE)
   })
 }
 
 export default startUpdater
+
+function safePearMessage(payload) {
+  if (typeof Pear?.message !== 'function') return
+  try {
+    return Pear.message(payload)
+  } catch {
+    try {
+      return Pear.message(payload?.type)
+    } catch {
+      return
+    }
+  }
+}

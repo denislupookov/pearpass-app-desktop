@@ -42,7 +42,7 @@ const pipe = createOrGetPipe()
 //     process.env.NODE_ENV === 'production')
 
 const client = createOrGetPearpassClient(pipe, storage, {
-  debugMode: true
+  debugMode: false
 })
 
 setPearpassVaultClient(client)

@@ -1,7 +1,7 @@
 {
   "name": "pearpass-app-desktop",
-  "version": "1.8.0",
-  "upgrade": "pear://bga1jdn1o8u5wqop5a7dwahohfj4s5dkui6jbk75dab7d7r1k4zo",
+  "version": "1.5.0",
+  "upgrade": "pear://b9qqt9s7ct6nfaoeyaibn7ggzbyc8s6dzm8amsxfhf3ffjjtau7y",
   "productName": "PearPass",
   "pear": {
     "name": "pearpass-app-desktop",
@@ -13,7 +13,7 @@
       "/workers/updater/index.js"
     ],
     "gui": {
-      "backgroundColor": "#1F2430",
+      "backgroundColor": "#1F2430", 
       "height": "1024",
       "width": "1440"
     },
@@ -25,6 +25,7 @@
       "entrypoints": [
         "node_modules/pearpass-lib-vault-core/src/worklet/app.js",
         "subProcess/clipboardCleanup.js",
+        "package.json",
         "/index.js"
       ],
       "prefetch": [
@@ -50,7 +51,6 @@
   "type": "module",
   "license": "Apache-2.0",
   "scripts": {
-    "postinstall": "patch-package",
     "test": "jest",
     "build:pear": "lingui extract && lingui compile && tsc",
     "lint:fix": "eslint --fix ./src",
@@ -59,7 +59,8 @@
     "lingui:extract": "lingui extract",
     "lingui:compile": "lingui compile",
     "prepare": "husky",
-    "dev": "concurrently -n \"TypeScript,Pear\" -c \"blue,green\" \"tsc --watch\" \"pear run -d .\""
+    "dev": "concurrently -n \"TypeScript,Pear\" -c \"blue,green\" \"tsc --watch\" \"pear run -d .\"",
+    "build:dev:arm64": "APP_FILE=app.dev.cjs ./scripts/build-dmg-arm64.sh"
   },
   "devDependencies": {
     "@babel/core": "7.26.10",
@@ -102,7 +103,9 @@
     "@lingui/react": "5.1.2",
     "@rive-app/react-canvas": "4.22.1",
     "bare-build": "^0.4.5",
-    "bare-os": "3.6.2",
+    "bare-fs": "^4.5.6",
+    "bare-os": "^3.6.2",
+    "bare-path": "^3.0.0",
     "bare-subprocess": "5.2.1",
     "buffer": "6.0.3",
     "compact-encoding": "2.18.0",
@@ -112,7 +115,6 @@
     "htm": "3.1.1",
     "jszip": "3.10.1",
     "os": "^0.1.2",
-    "patch-package": "^8.0.1",
     "path": "^0.12.7",
     "pear-apps-lib-feedback": "git+https://github.com/tetherto/pear-apps-lib-feedback.git",
     "pear-apps-lib-ui-react-hooks": "git+https://github.com/tetherto/pear-apps-lib-ui-react-hooks.git",
