@@ -29,11 +29,14 @@ import { handleExportCSVPerVault } from '../../../SettingsView/ExportTab/utils/e
 import { handleExportJsonPerVaultTest } from '../../../SettingsView/ExportTab/utils/exportJsonPerVault'
 import { createStyles } from './styles'
 
-type ExportFormat = 'json' | 'csv'
-
 type FormValues = {
   password: string
   passwordConfirm: string
+}
+
+enum ExportFormat {
+  JSON = 'json',
+  CSV = 'csv'
 }
 
 export const ExportItemsContent = () => {
@@ -44,7 +47,9 @@ export const ExportItemsContent = () => {
   const { setModal, closeModal } = useModal()
   const { data: currentVault, refetch: refetchVault } = useVault()
 
-  const [selectedFormat, setSelectedFormat] = useState<ExportFormat>('json')
+  const [selectedFormat, setSelectedFormat] = useState<ExportFormat>(
+    ExportFormat.JSON
+  )
   const [isPasswordProtected, setIsPasswordProtected] = useState(false)
   const [isExporting, setIsExporting] = useState(false)
 
@@ -89,7 +94,7 @@ export const ExportItemsContent = () => {
       const vaultData = await fetchVaultData()
       const vaultsToExport = [vaultData]
 
-      if (selectedFormat === 'json') {
+      if (selectedFormat === ExportFormat.JSON) {
         await handleExportJsonPerVaultTest(vaultsToExport, encryptionPassword)
       } else {
         await handleExportCSVPerVault(vaultsToExport)
@@ -152,14 +157,14 @@ export const ExportItemsContent = () => {
 
   const radioOptions = [
     {
-      value: 'json',
+      value: ExportFormat.JSON,
       label: t('JSON (Recommended)'),
       description: t(
         'JSON preserves all data, including custom fields, attachments, and metadata, ensuring a complete export'
       )
     },
     {
-      value: 'csv',
+      value: ExportFormat.CSV,
       label: t('CSV'),
       description: t(
         'CSV exports basic item data for spreadsheets, without custom fields, attachments, or metadata.'
@@ -167,7 +172,8 @@ export const ExportItemsContent = () => {
     }
   ]
 
-  const passwordFieldsVisible = selectedFormat === 'json' && isPasswordProtected
+  const passwordFieldsVisible =
+    selectedFormat === ExportFormat.JSON && isPasswordProtected
   const passwordsMatch =
     values.password.length > 0 &&
     values.passwordConfirm.length > 0 &&
@@ -202,7 +208,7 @@ export const ExportItemsContent = () => {
         testID="export-format-radio"
       />
 
-      {selectedFormat === 'json' && (
+      {selectedFormat === ExportFormat.JSON && (
         <div style={styles.toggleCard}>
           <ToggleSwitch
             checked={isPasswordProtected}
