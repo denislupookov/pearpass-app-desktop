@@ -306,17 +306,6 @@ export const WelcomePage = ({ onStart }: { onStart: () => void }) => {
 }
 ```
 
-## Reference files (copy patterns from these)
-
-When uncertain, mirror these canonical v2 files:
-
-- **Form with validation** — [src/pages/WelcomePage/CardCreateMasterPasswordV2/index.tsx](src/pages/WelcomePage/CardCreateMasterPasswordV2/index.tsx): `Form`, `InputField`, `PasswordField`, `AlertMessage`, `Button`, `Link`, `Text`, `Title`.
-- **Dialog + form** — [src/containers/Modal/CreateVaultModalContentV2/CreateVaultModalContentV2.tsx](src/containers/Modal/CreateVaultModalContentV2/CreateVaultModalContentV2.tsx): `Dialog`, `Form`, `InputField`, `PasswordField`, `ToggleSwitch`, `Button`.
-- **Simple dialog** — [src/containers/Modal/MoveFolderModalContentV2/MoveFolderModalContentV2.tsx](src/containers/Modal/MoveFolderModalContentV2/MoveFolderModalContentV2.tsx): `Dialog`, `Button`, `Text`, `useTheme`.
-- **Header with search** — [src/components/AppHeaderV2/AppHeaderV2.tsx](src/components/AppHeaderV2/AppHeaderV2.tsx): `Button`, `SearchField`, `useTheme`.
-- **Styles with tokens** — [src/pages/WelcomePage/CardCreateMasterPasswordV2/styles.ts](src/pages/WelcomePage/CardCreateMasterPasswordV2/styles.ts): `rawTokens` + `ThemeColors`.
-- **Intro page** — [src/pages/Intro/IntroV2.tsx](src/pages/Intro/IntroV2.tsx): `Button`, `Text`, `Title`.
-
 ## Anti-patterns to avoid
 
 When editing a v2 file or creating new UI, do **not**:
