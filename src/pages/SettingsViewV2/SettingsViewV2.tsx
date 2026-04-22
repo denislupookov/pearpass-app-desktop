@@ -35,7 +35,8 @@ import {
   BlindPeersContent,
   ExportItemsContent,
   ImportItemsContent,
-  MasterPasswordContent
+  MasterPasswordContent,
+  ReportAProblemContent
 } from './content'
 
 export enum SettingsItemKey {
@@ -78,6 +79,8 @@ const renderActiveContent = (
       return <ImportItemsContent />
     case SettingsItemKey.ExportItems:
       return <ExportItemsContent />
+    case SettingsItemKey.ReportAProblem:
+      return <ReportAProblemContent />
     default:
       return null
   }
