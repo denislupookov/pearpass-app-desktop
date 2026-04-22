@@ -141,11 +141,44 @@ beforeEach(() => {
 })
 
 describe('AppPreferencesContent', () => {
-  it('renders the heading and both rows', () => {
+  it('renders the heading and all rows', () => {
     render(<AppPreferencesContent />)
     expect(screen.getByText('App Preferences')).toBeInTheDocument()
     expect(screen.getByText('Auto Lock')).toBeInTheDocument()
+    expect(screen.getByText('Copy to Clipboard')).toBeInTheDocument()
     expect(screen.getByText('Reminders')).toBeInTheDocument()
+  })
+
+  it('starts with clipboard enabled when localStorage has no value', () => {
+    render(<AppPreferencesContent />)
+    expect(
+      screen.getByTestId('settings-copy-to-clipboard-toggle')
+    ).toHaveAttribute('aria-checked', 'true')
+  })
+
+  it('starts with clipboard disabled when localStorage value is "true"', () => {
+    localStorage.setItem(LOCAL_STORAGE_KEYS.COPY_TO_CLIPBOARD_DISABLED, 'true')
+    render(<AppPreferencesContent />)
+    expect(
+      screen.getByTestId('settings-copy-to-clipboard-toggle')
+    ).toHaveAttribute('aria-checked', 'false')
+  })
+
+  it('writes "true" to localStorage when clipboard is toggled off', () => {
+    render(<AppPreferencesContent />)
+    fireEvent.click(screen.getByTestId('settings-copy-to-clipboard-toggle'))
+    expect(
+      localStorage.getItem(LOCAL_STORAGE_KEYS.COPY_TO_CLIPBOARD_DISABLED)
+    ).toBe('true')
+  })
+
+  it('removes the localStorage key when clipboard is toggled back on', () => {
+    localStorage.setItem(LOCAL_STORAGE_KEYS.COPY_TO_CLIPBOARD_DISABLED, 'true')
+    render(<AppPreferencesContent />)
+    fireEvent.click(screen.getByTestId('settings-copy-to-clipboard-toggle'))
+    expect(
+      localStorage.getItem(LOCAL_STORAGE_KEYS.COPY_TO_CLIPBOARD_DISABLED)
+    ).toBeNull()
   })
 
   it('shows the current timeout in the select field', () => {

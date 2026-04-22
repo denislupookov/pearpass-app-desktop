@@ -25,6 +25,7 @@ const TEST_IDS = {
   root: 'settings-app-preferences',
   autoLockSelect: 'settings-auto-lock-select',
   autoLockOption: 'settings-auto-lock-option',
+  copyToClipboardToggle: 'settings-copy-to-clipboard-toggle',
   remindersToggle: 'settings-reminders-toggle'
 } as const
 
@@ -47,6 +48,11 @@ export const AppPreferencesContent = () => {
   const { timeoutMs, setTimeoutMs } = useAutoLockPreferences()
 
   const [isTimeoutDropdownOpen, setIsTimeoutDropdownOpen] = useState(false)
+  const [isClipboardDisabled, setIsClipboardDisabled] = useState(() =>
+    localStorage.getItem(
+      LOCAL_STORAGE_KEYS.COPY_TO_CLIPBOARD_DISABLED
+    ) === 'true'
+  )
   const [isReminderDisabled, setIsReminderDisabled] = useState(() =>
     isPasswordChangeReminderDisabled()
   )
@@ -74,6 +80,18 @@ export const AppPreferencesContent = () => {
     },
     [setTimeoutMs]
   )
+
+  const handleClipboardToggle = useCallback((isOn: boolean) => {
+    if (isOn) {
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.COPY_TO_CLIPBOARD_DISABLED)
+    } else {
+      localStorage.setItem(
+        LOCAL_STORAGE_KEYS.COPY_TO_CLIPBOARD_DISABLED,
+        'true'
+      )
+    }
+    setIsClipboardDisabled(!isOn)
+  }, [])
 
   const handleReminderToggle = useCallback((isOn: boolean) => {
     if (isOn) {
@@ -140,6 +158,18 @@ export const AppPreferencesContent = () => {
         )}
 
         <div style={AUTO_LOCK_ENABLED ? styles.rowDivider : undefined}>
+          <ToggleSwitch
+            data-testid={TEST_IDS.copyToClipboardToggle}
+            checked={!isClipboardDisabled}
+            onChange={handleClipboardToggle}
+            label={t('Copy to Clipboard')}
+            description={t(
+              'Enable one-tap copying to move your credentials between apps effortlessly'
+            )}
+          />
+        </div>
+
+        <div style={styles.rowDivider}>
           <ToggleSwitch
             data-testid={TEST_IDS.remindersToggle}
             checked={!isReminderDisabled}
