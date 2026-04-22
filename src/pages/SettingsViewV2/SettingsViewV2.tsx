@@ -32,9 +32,11 @@ import { useTranslation } from '../../hooks/useTranslation'
 import { createStyles } from './SettingsViewV2.styles'
 import {
   AppPreferencesContent,
+  AppVersionContent,
   BlindPeersContent,
   ExportItemsContent,
   ImportItemsContent,
+  LanguageContent,
   MasterPasswordContent
 } from './content'
 
@@ -78,6 +80,10 @@ const renderActiveContent = (
       return <ImportItemsContent />
     case SettingsItemKey.ExportItems:
       return <ExportItemsContent />
+    case SettingsItemKey.Language:
+      return <LanguageContent />
+    case SettingsItemKey.AppVersion:
+      return <AppVersionContent />
     default:
       return null
   }
