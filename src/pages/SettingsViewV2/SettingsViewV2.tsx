@@ -38,7 +38,8 @@ import {
   ExportItemsContent,
   ImportItemsContent,
   LanguageContent,
-  MasterPasswordContent
+  MasterPasswordContent,
+  ReportAProblemContent
 } from './content'
 import { YourVaultsContent } from './content/YourVaultsContent'
 
@@ -85,6 +86,8 @@ const renderActiveContent = (
       return <ImportItemsContent />
     case SettingsItemKey.ExportItems:
       return <ExportItemsContent />
+    case SettingsItemKey.ReportAProblem:
+      return <ReportAProblemContent currentVersion={currentVersion}/>
     case SettingsItemKey.Language:
       return <LanguageContent />
     case SettingsItemKey.AppVersion:
