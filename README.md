@@ -34,13 +34,12 @@ Unlike traditional password managers that rely on centralized servers, PearPass 
 
 ## Features
 
-- **Encrypted-at-rest storage.** Passwords, credit cards, secure notes, and custom fields, all encrypted before hitting disk.
-- **Cross-device sync.** Peer-to-peer replication via Pear Runtime; no central server required.
-- **Offline access.** Your vault is always available locally, even without a network connection.
-- **Password health.** Built-in strength analysis flags weak or reused passwords.
-- **Random password generator.** Configurable generator produces strong, unique passwords on demand.
-- **Multi-platform.** Runs on macOS, Linux, and Windows via Electron; also available as a native Pear app.
-- **Browser extension integration.** Works alongside the [PearPass browser extension](https://github.com/tetherto/pearpass-app-browser-extension) for autofill.
+- **Encrypted-at-rest storage** — PearPass encrypts passwords, credit cards, secure notes, and custom fields before writing them to disk.
+- **Cross-device sync** — PearPass syncs credentials directly between your devices using Pear Runtime, with no central server.
+- **Offline access** — Access your vault anytime, even without a network connection.
+- **Password health** — Analyse password strength and identify weak passwords.
+- **Random password generator** — Generate strong, unique passwords.
+- **Multi-platform** — Runs on macOS, Linux, and Windows. PearPass is also available on [mobile](https://github.com/tetherto/pearpass-app-mobile) and as a [browser extension](https://github.com/tetherto/pearpass-app-browser-extension).
 
 ---
 
@@ -54,22 +53,24 @@ Unlike traditional password managers that rely on centralized servers, PearPass 
 node --version
 ```
 
-- **Pear Runtime** — install guide: [docs.pears.com/guide/getting-started](https://docs.pears.com/guide/getting-started.html).
+- **Pear Runtime** — [Installation guide](https://docs.pears.com/guide/getting-started.html).
 
 ### Steps
 
 ```bash
 # 1. Clone the repository
 git clone git@github.com:tetherto/pearpass-app-desktop.git
+
+# 2. Go to the cloned directory
 cd pearpass-app-desktop
 
-# 2. Install dependencies
+# 3. Install dependencies
 npm install
 
-# 3. Build translation keys
+# 4. Generate translation keys
 npm run build
 
-# 4. Start the development app
+# 5. Start the development app
 npm run dev
 ```
 
@@ -77,7 +78,7 @@ npm run dev
 
 ## Usage Examples
 
-Visit the official PearPass documentation for step-by-step guides on setup, vault management, syncing across devices, and browser extension usage:
+Visit the official PearPass documentation for step-by-step guides on setup, vault management, syncing across devices, browser extension usage, and all other PearPass features:
 
 **[docs.pass.pears.com](https://docs.pass.pears.com)**
 
@@ -104,7 +105,14 @@ If successful, stage it, for example: `pear stage dev`.
 
 Then run the app: `pear run pear://GENERATED_URL`.
 
-Pear serves files from the `dist/` folder. The `src/` folder is for development only. `package.json` excludes it from the Pear bundle:
+Pear serves files from the `dist/` folder:
+
+```html
+<!-- index.html -->
+<script type="module" src="./dist/app.js"></script>
+```
+
+The `src/` folder is for development and it's ignored in `package.json`:
 
 ```json
 "ignore": [".github", "appling", ".git", ".gitignore", "packages", "src"]
@@ -114,7 +122,7 @@ Pear serves files from the `dist/` folder. The `src/` folder is for development 
 
 ## Workspace Dependencies
 
-The following sibling modules must be present in the workspace (these are not published to npm):
+The following sibling modules must be present in the workspace (they are not declared as npm dependencies):
 
 - [`@tetherto/tether-dev-docs`](../tether-dev-docs)
 - [`@tetherto/pear-apps-lib-feedback`](../pear-apps-lib-feedback)
