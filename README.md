@@ -4,7 +4,7 @@
 
 # PearPass Desktop
 
-> A distributed, end-to-end encrypted password manager for desktop, built on Pear Runtime, works offline, syncs across devices.
+> The desktop app for PearPass, an open-source, end-to-end encrypted password and identity manager built on Pear Runtime.
 
 ---
 
@@ -26,7 +26,7 @@
 
 ## Introduction
 
-PearPass is an open-source, privacy-first password and identity manager that gives you full control over your sensitive information. It makes storing and managing your credentials simple, secure, and private, with all data encrypted and stored locally on your device.
+PearPass is an open-source, privacy-first password and identity manager that gives you full control over your sensitive information. It makes storing and managing your credentials simple, secure, and private. PearPass encrypts and stores all data locally on your device.
 
 Unlike traditional password managers that rely on centralized servers, PearPass is built on [Pear Runtime](https://pears.com/) and uses peer-to-peer technology to sync your credentials directly between your devices, ensuring they remain private, secure, and always under your control.
 
@@ -104,7 +104,7 @@ If successful, stage it, for example: `pear stage dev`.
 
 Then run the app: `pear run pear://GENERATED_URL`.
 
-Pear serves files from the `dist/` folder. The `src/` folder is for development only and is excluded from the Pear bundle via `package.json`:
+Pear serves files from the `dist/` folder. The `src/` folder is for development only. `package.json` excludes it from the Pear bundle:
 
 ```json
 "ignore": [".github", "appling", ".git", ".gitignore", "packages", "src"]
@@ -114,7 +114,7 @@ Pear serves files from the `dist/` folder. The `src/` folder is for development 
 
 ## Workspace Dependencies
 
-The following sibling modules must be present in the workspace (they are not declared as npm dependencies):
+The following sibling modules must be present in the workspace (these are not published to npm):
 
 - [`@tetherto/tether-dev-docs`](../tether-dev-docs)
 - [`@tetherto/pear-apps-lib-feedback`](../pear-apps-lib-feedback)
@@ -162,7 +162,7 @@ The following sibling modules must be present in the workspace (they are not dec
 
 ## Contributing
 
-Contributions are welcome. See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the dev loop, coding conventions, and how to run the test suite.
+We welcome contributions. See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the dev loop, coding conventions, and how to run the test suite.
 
 ---
 
