@@ -6,6 +6,7 @@ import { ImportItemsContent } from './ImportItemsContent'
 import { LanguageContent } from './LanguageContent'
 import { MasterPasswordContent } from './MasterPasswordContent'
 import { YourDevicesContent } from './YourDevicesContent'
+import { ReportAProblemContent } from './ReportAProblemContent'
 
 export {
   AppPreferencesContent,
@@ -15,5 +16,6 @@ export {
   ImportItemsContent,
   YourDevicesContent,
   LanguageContent,
-  MasterPasswordContent
+  MasterPasswordContent,
+  ReportAProblemContent
 }

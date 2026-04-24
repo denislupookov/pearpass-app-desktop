@@ -207,7 +207,7 @@ declare module '@tetherto/pearpass-lib-vault' {
   }
 
   export function useCreateFolder(options?: {
-    onCompleted?: (payload: string) => void
+    onCompleted?: (payload: { name: string }) => void
     onError?: (error: string) => void
   }): UseCreateFolderResult
 
@@ -235,7 +235,12 @@ declare module '@tetherto/pearpass-utils-password-check' {
 
   export function checkPasswordStrength(password: string): {
     strengthType: PasswordStrengthType
+    type: string
     errors?: string[]
+  }
+
+  export function checkPassphraseStrength(words: string[]): {
+    type: string
   }
 
   export function validatePasswordChange(params: {
@@ -296,6 +301,7 @@ declare module '@tetherto/pearpass-lib-constants' {
   export const DELETE_VAULT_ENABLED: boolean
   export const AUTHENTICATOR_ENABLED: boolean
   export const DESKTOP_DESIGN_VERSION: number
+  export const DATE_FORMAT: string
   export const MAX_IMPORT_RECORDS: number
   export const NATIVE_MESSAGING_BRIDGE_PEAR_LINK_PRODUCTION: string
   export const NATIVE_MESSAGING_BRIDGE_PEAR_LINK_STAGING: string
@@ -303,6 +309,32 @@ declare module '@tetherto/pearpass-lib-constants' {
   export const PEARPASS_WEBSITE: string
   export const PRIVACY_POLICY: string
   export const TERMS_OF_USE: string
+  export const DEFAULT_SELECTED_TYPE: number
+  export const PASSPHRASE_WORD_COUNTS: {
+    STANDARD_12: number
+    STANDARD_24: number
+    WITH_RANDOM_12: number
+    WITH_RANDOM_24: number
+  }
+  export const VALID_WORD_COUNTS: number[]
+}
+
+declare module '@tetherto/pearpass-utils-password-generator' {
+  export function generatePassword(
+    length: number,
+    rulesConfig?: {
+      includeSpecialChars?: boolean
+      lowerCase?: boolean
+      upperCase?: boolean
+      numbers?: boolean
+    }
+  ): string
+  export function generatePassphrase(
+    capitalLetters: boolean,
+    symbols: boolean,
+    numbers: boolean,
+    wordsCount: number
+  ): string[]
 }
 
 declare module '@tetherto/pearpass-lib-data-import' {
@@ -338,4 +370,54 @@ declare module '@tetherto/pearpass-lib-data-import' {
     data: unknown,
     fileType: string
   ): Promise<unknown[]>
+}
+
+declare module '@tetherto/pear-apps-lib-feedback' {
+  export type FeedbackTopic =
+    | 'BUG_REPORT'
+    | 'FEATURE_REQUEST'
+    | 'SECURITY_ISSUE'
+  export type FeedbackApp = 'MOBILE' | 'DESKTOP' | 'BROWSER_EXTENSION'
+
+  export interface SlackFeedbackPayload {
+    webhookUrPath: string
+    topic: FeedbackTopic
+    app?: FeedbackApp
+    operatingSystem?: string
+    deviceModel?: string
+    message: string
+    appVersion?: string
+    customFields?: unknown[]
+    additionalAttachment?: Record<string, unknown>
+  }
+
+  export interface GoogleFormMapping {
+    timestamp?: string
+    topic?: string
+    app?: string
+    operatingSystem?: string
+    deviceModel?: string
+    message?: string
+    appVersion?: string
+  }
+
+  export interface GoogleFormFeedbackPayload {
+    formKey: string
+    mapping?: GoogleFormMapping
+    additionalFields?: Array<{ key: string; value: string }>
+    topic?: FeedbackTopic | string
+    app?: FeedbackApp | string
+    operatingSystem?: string
+    deviceModel?: string
+    message?: string
+    appVersion?: string
+  }
+
+  export function sendSlackFeedback(
+    config: SlackFeedbackPayload
+  ): Promise<boolean | void>
+
+  export function sendGoogleFormFeedback(
+    config: GoogleFormFeedbackPayload
+  ): Promise<boolean | void>
 }
