@@ -36,7 +36,6 @@ const packagerConfig = {
     // RN deps — bundled by esbuild, never required at runtime
     /(^|\/)node_modules\/react-native(\/|$)/,
     /(^|\/)node_modules\/@react-native(\/|$)/,
-    /^\/build($|\/)/,
     /^\/e2e($|\/)/,
     /^\/docs($|\/)/,
   ]
